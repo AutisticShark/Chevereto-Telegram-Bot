@@ -68,7 +68,7 @@ def image(bot, update):
     update.message.reply_text('Download complete, now uploading...')
     return_data = image_upload(request_format(image_name))
     if return_data['status_code'] == 200:
-        uploaded_info = 'Upload succeeded!\nHere is your links to this image:\nWeb viewer: ' + return_data['image']['url_viewer'] + '\nOrigin size: ' + return_data['image']['url']# + '\n Medium size:' + return_data['medium']['url']
+        uploaded_info = 'Upload succeeded!\nHere are your links to this image:\nWeb viewer: ' + return_data['image']['url_viewer'] + '\nOrigin size: ' + return_data['image']['url']# + '\n Medium size:' + return_data['medium']['url']
         update.message.reply_text(uploaded_info)
     else:
         update.message.reply_text('Image Host error! Please try again later.')
