@@ -4,8 +4,7 @@
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from functools import wraps
 import os
-import os.path
-import subprocess 
+import os.path 
 import glob
 import telegram
 import requests
@@ -63,13 +62,15 @@ def start(bot, update):
 
 @send_typing_action
 def uptime(bot, update):
-    uptime_info = subprocess.check_output('uptime', shell=True)
-    bot.send_message(chat_id=update.message.chat_id, text=uptime_info)
+    uptime_command = os.popen("uptime")
+    uptime_output = uptime_command.read()
+    bot.send_message(chat_id=update.message.chat_id, text=uptime_output)
 
 @send_typing_action
 def storage_status(bot, update):
-    storage_status_info = subprocess.check_output('df -lh', shell=True)
-    bot.send_message(chat_id=update.message.chat_id, text=storage_status_info)
+    storage_status_command = os.popen("df -lh")
+    storage_status_output = storage_status_command.read()
+    bot.send_message(chat_id=update.message.chat_id, text=storage_status_output)
 
 @send_typing_action
 def unknow_msg(bot, update):
