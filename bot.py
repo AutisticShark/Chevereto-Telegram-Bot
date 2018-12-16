@@ -86,7 +86,7 @@ def image_upload(images):
     upload_response = requests.post(request_url, files = images)
     print(upload_response)
     return upload_response.json()
-
+#構造upload請求
 def request_format(image_name):
     image_upload_request = []
     image_type = mimetypes.guess_type(image_name)[0]
