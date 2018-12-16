@@ -1,4 +1,5 @@
 [BOT]
+MODE = 
 ACCESS_TOKEN = 
 WEBHOOK_URL = 
 [HOST]
