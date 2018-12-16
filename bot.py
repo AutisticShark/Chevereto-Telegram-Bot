@@ -30,6 +30,23 @@ def send_typing_action(function):
         function(bot, update, **kwargs)
     return command_function
 
+@send_typing_action
+def help(bot, update):
+    bot.send_message(chat_id=update.message.chat_id, text='Send me some pictures or image file. Available format: .jpg, .png, .bmp, .gif, 20MB max file size.')
+
+def privacy(bot, update):
+    bot.send_message(chat_id=update.message.chat_id, text="This bot is only designed to rely your media file, all of your presonal data will not storage on our server, for more usage info please check the image host's ToS/AUP site, thank you.")
+
+def uptime(bot, update):
+    uptime_command = os.popen("uptime")
+    uptime_output = uptime_command.read()
+    bot.send_message(chat_id=update.message.chat_id, text=uptime_output)
+
+def storage_status(bot, update):
+    storage_status_command = os.popen("df -lh")
+    storage_status_output = storage_status_command.read()
+    bot.send_message(chat_id=update.message.chat_id, text=storage_status_output)
+
 def cache_status(bot, update):
     cache_path = os.getcwd()
     cache_files_count = str(len([name for name in os.listdir(cache_path) if os.path.isfile(os.path.join(cache_path, name))]) - 1)
@@ -51,22 +68,6 @@ def cache_clean(bot, update):
     for cache in cache_files_list:
         os.remove(cache) 
     bot.send_message(chat_id=update.message.chat_id, text='All upload cache are cleared')
-
-@send_typing_action
-def start(bot, update):
-    bot.send_message(chat_id=update.message.chat_id, text='Send me some pictures or image file. Available format: .jpg, .png, .bmp, .gif, 20MB max file size.')
-
-@send_typing_action
-def uptime(bot, update):
-    uptime_command = os.popen("uptime")
-    uptime_output = uptime_command.read()
-    bot.send_message(chat_id=update.message.chat_id, text=uptime_output)
-
-@send_typing_action
-def storage_status(bot, update):
-    storage_status_command = os.popen("df -lh")
-    storage_status_output = storage_status_command.read()
-    bot.send_message(chat_id=update.message.chat_id, text=storage_status_output)
 
 @send_typing_action
 def unknow_msg(bot, update):
@@ -105,10 +106,10 @@ def request_format(image_name):
 def main():
     updater = Updater(config['BOT']['ACCESS_TOKEN'])#填你bot的API Key
     dp = updater.dispatcher
-    #/start指令處理
-    dp.add_handler(CommandHandler("start", start))
     #/help指令處理
     dp.add_handler(CommandHandler("help", help))
+    #/privacy指令處理
+    dp.add_handler(CommandHandler("privacy", privacy))
     #/uptime指令處理
     dp.add_handler(CommandHandler("uptime", uptime))
     #/storage_status指令處理
