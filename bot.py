@@ -8,6 +8,7 @@ import os.path
 import glob
 import telegram
 import requests
+import configparser
 import json
 import uuid
 import mimetypes
@@ -74,9 +75,9 @@ def image(bot, update):
         update.message.reply_text('Image Host error! Please try again later.')
 
 def image_upload(images):
-    image_host = 'XXXXX'#你的圖床地址，記得啓用SSL
-    image_host_api_key = 'XXXXX'#填入你的圖床API KEY
-    image_host_return_format = "json"#目前只能用json
+    image_host = config['HOST']['IMAGE_HOST']
+    image_host_api_key = config['HOST']['IMAGE_HOST_API_KEY']
+    image_host_return_format = config['HOST']['IMAGE_HOST_RETURN_FORMAT']
     request_url = 'https://' + image_host + '/api/1/upload/?key=' + image_host_api_key + '&format=' + image_host_return_format
     upload_response = requests.post(request_url, files = images)
     print(upload_response)
@@ -90,7 +91,9 @@ def request_format(image_name):
     return image_upload_request
 
 def main():
-    updater = Updater("XXXXX")#填你bot的API Key
+    config = configparser.ConfigParser()
+    config.read('config.ini')
+    updater = Updater(config['BOT']['ACCESS_TOKEN'])#填你bot的API Key
     dp = updater.dispatcher
     #/start指令處理
     dp.add_handler(CommandHandler("start", start))
