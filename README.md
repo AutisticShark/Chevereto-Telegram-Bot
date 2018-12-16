@@ -18,5 +18,5 @@ ACCESS_TOKEN = Your bot's API key, if you don't have it, @botfather to create on
 WEBHOOK_URL = Your bot's Webhook url, which you can configure it via @botfather   
 [HOST]   
 IMAGE_HOST = The domain name of your image host site(without "https://" part)   
-IMAGE_HOST_API_KEY = You can find it in https://your-image-host/dashboard/settings/api   
+IMAGE_HOST_API_KEY = You can find it on https://your-image-host/dashboard/settings/api   
 IMAGE_HOST_RETURN_FORMAT = json
