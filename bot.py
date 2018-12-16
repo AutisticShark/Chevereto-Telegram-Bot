@@ -22,10 +22,6 @@ logger = logging.getLogger(__name__)
 config = configparser.ConfigParser()
 config.read('config.ini')
 
-def error(update, error):
-    #Log Errors caused by Updates.
-    logger.warning('Update "%s" caused error "%s"', update, error)
-
 def send_typing_action(function):
     @wraps(function)
     def command_function(*args, **kwargs):
@@ -125,8 +121,6 @@ def main():
     #處理用戶私聊發送的未知訊息
     unknow_msg_handler = MessageHandler(Filters.private, unknow_msg)
     dp.add_handler(unknow_msg_handler)
-    #添加錯誤logging
-    dp.add_error_handler(error)
     #啓動進程
     updater.start_polling()
 
