@@ -5,6 +5,7 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from functools import wraps
 import os
 import os.path
+import subprocess 
 import glob
 import telegram
 import requests
@@ -61,6 +62,11 @@ def start(bot, update):
     bot.send_message(chat_id=update.message.chat_id, text='Send me some pictures or image file. Available format: .jpg, .png, .bmp, .gif, 20MB max file size.')
 
 @send_typing_action
+def uptime(bot, update):
+    uptime_info = subprocess.check_output('uptime', shell=True)
+    bot.send_message(chat_id=update.message.chat_id, text=uptime_info)
+
+@send_typing_action
 def unknow_msg(bot, update):
     bot.send_message(chat_id=update.message.chat_id, text='Please send me pictures or image file only!')
 
@@ -99,6 +105,12 @@ def main():
     dp = updater.dispatcher
     #/start指令處理
     dp.add_handler(CommandHandler("start", start))
+    #/uptime指令處理
+    dp.add_handler(CommandHandler("uptime", uptime))
+    #/load指令處理
+    dp.add_handler(CommandHandler("load", load))
+    #/storage_status指令處理
+    dp.add_handler(CommandHandler("storage_status", storage_status))
     #/cache_status指令處理
     dp.add_handler(CommandHandler("cache_status", cache_status))
     #/cache_clean指令處理
