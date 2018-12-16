@@ -1,5 +1,6 @@
 # Chevereto-Telegram-Bot
 Installation guide
+
 > 1 . Install latest version of Python3(3.7 or newer) & latest version of pip
 > 2 . Clone bot file
     git clone https://github.com/SuicidalCat/Chevereto-Telegram-Bot.git
