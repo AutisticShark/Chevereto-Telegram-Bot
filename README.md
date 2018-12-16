@@ -1,5 +1,5 @@
-#Chevereto-Telegram-Bot
-##Installation guide   
+# Chevereto-Telegram-Bot   
+## Installation guide   
 > 1 . Install latest version of Python3(3.7 or newer) & pip   
 > 2 . Clone bot file
 
@@ -11,7 +11,7 @@
 
 > 4 . Copy config.ini.new to config.ini, then edit it   
 > 5 . Run bot.py   
-##config.ini explanation   
+## config.ini explanation   
 [BOT]   
 MODE = PULLING or WEBHOOK(gugugu)   
 ACCESS_TOKEN = Your bot's API key, if you don't have it, @botfather to create one!   
