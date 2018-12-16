@@ -107,6 +107,8 @@ def main():
     dp = updater.dispatcher
     #/start指令處理
     dp.add_handler(CommandHandler("start", start))
+    #/help指令處理
+    dp.add_handler(CommandHandler("help", help))
     #/uptime指令處理
     dp.add_handler(CommandHandler("uptime", uptime))
     #/storage_status指令處理
