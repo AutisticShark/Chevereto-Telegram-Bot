@@ -18,6 +18,10 @@ import logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+#加載config
+config = configparser.ConfigParser()
+config.read('config.ini')
+
 def error(update, error):
     #Log Errors caused by Updates.
     logger.warning('Update "%s" caused error "%s"', update, error)
@@ -91,8 +95,6 @@ def request_format(image_name):
     return image_upload_request
 
 def main():
-    config = configparser.ConfigParser()
-    config.read('config.ini')
     updater = Updater(config['BOT']['ACCESS_TOKEN'])#填你bot的API Key
     dp = updater.dispatcher
     #/start指令處理
