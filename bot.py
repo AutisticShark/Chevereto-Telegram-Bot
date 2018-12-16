@@ -67,6 +67,11 @@ def uptime(bot, update):
     bot.send_message(chat_id=update.message.chat_id, text=uptime_info)
 
 @send_typing_action
+def storage_status(bot, update):
+    storage_status_info = subprocess.check_output('df -lh', shell=True)
+    bot.send_message(chat_id=update.message.chat_id, text=storage_status_info)
+
+@send_typing_action
 def unknow_msg(bot, update):
     bot.send_message(chat_id=update.message.chat_id, text='Please send me pictures or image file only!')
 
@@ -107,8 +112,6 @@ def main():
     dp.add_handler(CommandHandler("start", start))
     #/uptime指令處理
     dp.add_handler(CommandHandler("uptime", uptime))
-    #/load指令處理
-    dp.add_handler(CommandHandler("load", load))
     #/storage_status指令處理
     dp.add_handler(CommandHandler("storage_status", storage_status))
     #/cache_status指令處理
