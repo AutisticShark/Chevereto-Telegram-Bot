@@ -27,7 +27,7 @@ config.read('config.ini')
 def main():
     updater = Updater(config['BOT']['ACCESS_TOKEN'])#填你bot的API Key
     dp = updater.dispatcher
-    #handlers
+    #handler functions
     def send_typing_action(function):
         @wraps(function)
         def command_function(*args, **kwargs):
@@ -116,6 +116,7 @@ def main():
         image_upload_request.append(('source' , (image_name , open(image_name , 'rb') , image_type)))
         print(image_upload_request)
         return image_upload_request
+    #handlers
     #/help指令處理
     dp.add_handler(CommandHandler("help", help))
     #/privacy指令處理
