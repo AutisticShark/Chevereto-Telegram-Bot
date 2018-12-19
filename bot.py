@@ -126,6 +126,7 @@ def main():
     dp.add_handler(unknow_msg_handler)
     #啓動進程
     updater.start_polling()
+    updater.idle()
 
 if __name__ == '__main__':
     main()
