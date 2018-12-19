@@ -27,26 +27,6 @@ config.read('config.ini')
 def main():
     updater = Updater(config['BOT']['ACCESS_TOKEN'])#填你bot的API Key
     dp = updater.dispatcher
-    #/help指令處理
-    dp.add_handler(CommandHandler("help", help))
-    #/privacy指令處理
-    dp.add_handler(CommandHandler("privacy", privacy))
-    #/uptime指令處理
-    dp.add_handler(CommandHandler("uptime", uptime))
-    #/storage_status指令處理
-    dp.add_handler(CommandHandler("storage_status", storage_status))
-    #/cache_status指令處理
-    dp.add_handler(CommandHandler("cache_status", cache_status))
-    #/cache_clean指令處理
-    dp.add_handler(CommandHandler("cache_clean", cache_clean))
-    #/restart指令處理
-    dp.add_handler(CommandHandler("restart", restart, filters=Filters.user(username=config['BOT']['ADMIN_USER'])))
-    #處理用戶發送的圖片
-    image_handler = MessageHandler(Filters.photo, image)
-    dp.add_handler(image_handler)
-    #處理用戶私聊發送的未知訊息
-    unknow_msg_handler = MessageHandler(Filters.private, unknow_msg)
-    dp.add_handler(unknow_msg_handler)
     #handlers
     def send_typing_action(function):
         @wraps(function)
@@ -136,6 +116,26 @@ def main():
         image_upload_request.append(('source' , (image_name , open(image_name , 'rb') , image_type)))
         print(image_upload_request)
         return image_upload_request
+    #/help指令處理
+    dp.add_handler(CommandHandler("help", help))
+    #/privacy指令處理
+    dp.add_handler(CommandHandler("privacy", privacy))
+    #/uptime指令處理
+    dp.add_handler(CommandHandler("uptime", uptime))
+    #/storage_status指令處理
+    dp.add_handler(CommandHandler("storage_status", storage_status))
+    #/cache_status指令處理
+    dp.add_handler(CommandHandler("cache_status", cache_status))
+    #/cache_clean指令處理
+    dp.add_handler(CommandHandler("cache_clean", cache_clean))
+    #/restart指令處理
+    dp.add_handler(CommandHandler("restart", restart, filters=Filters.user(username=config['BOT']['ADMIN_USER'])))
+    #處理用戶發送的圖片
+    image_handler = MessageHandler(Filters.photo, image)
+    dp.add_handler(image_handler)
+    #處理用戶私聊發送的未知訊息
+    unknow_msg_handler = MessageHandler(Filters.private, unknow_msg)
+    dp.add_handler(unknow_msg_handler)
     #啓動進程
     updater.start_polling()
     updater.idle()
