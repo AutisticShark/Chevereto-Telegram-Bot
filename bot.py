@@ -69,6 +69,14 @@ def cache_clean(bot, update):
         os.remove(cache) 
     bot.send_message(chat_id=update.message.chat_id, text='All upload cache are cleared')
 
+def restart_action():
+    updater.stop()
+    os.execl(sys.executable, sys.executable, *sys.argv)
+
+def restart(bot, update):
+    update.message.reply_text('Bot is restarting...')
+    Thread(target=stop_and_restart).start()
+
 @send_typing_action
 def unknow_msg(bot, update):
     bot.send_message(chat_id=update.message.chat_id, text='Please send me pictures or image file only!')
@@ -118,6 +126,8 @@ def main():
     dp.add_handler(CommandHandler("cache_status", cache_status))
     #/cache_clean指令處理
     dp.add_handler(CommandHandler("cache_clean", cache_clean))
+    #/restart指令處理
+    dp.add_handler(CommandHandler("restart", restart, filters=Filters.user(username=config['BOT']['ADMIN_USER'])))
     #處理用戶發送的圖片
     image_handler = MessageHandler(Filters.photo, image)
     dp.add_handler(image_handler)
