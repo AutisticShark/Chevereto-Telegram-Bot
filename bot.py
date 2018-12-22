@@ -14,6 +14,7 @@ import configparser
 import json
 import uuid
 import mimetypes
+import magic
 import logging
 
 #錯誤logging
@@ -108,7 +109,7 @@ def main():
         image_file_name = '%s.cache' % str(uuid.uuid4())
         image_file = bot.getFile(image_file_id)
         image_file.download(image_file_name)
-        image_file_mime = str(mimetypes.guess_type(image_file_name)[0])
+        image_file_mime = magic.from_file(image_file_name, mime=True)
         if image_file_mime in allowed_image_file_format:
             update.message.reply_text('Download complete, now uploading...')
             return_data = image_upload(request_format(image_file_name))
