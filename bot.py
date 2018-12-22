@@ -118,6 +118,7 @@ def main():
             else:
                 update.message.reply_text('Image Host error! Please try again later.')
         else:
+            print(image_file_mime)
             update.message.reply_text('Please send me .JPG .PNG .BMP .GIF format file only!')
             os.remove(image_file_name)
 
