@@ -119,7 +119,6 @@ def main():
             else:
                 update.message.reply_text('Image Host error! Please try again later.')
         else:
-            print(image_file_mime)
             update.message.reply_text('Please send me .JPG .PNG .BMP .GIF format file only!')
             os.remove(image_file_name)
 
@@ -136,6 +135,7 @@ def main():
         image_upload_request = []
         image_type = magic.from_file(image_name, mime=True)
         image_upload_request.append(('source' , (image_name , open(image_name , 'rb') , image_type)))
+        print(image_type)
         print(image_upload_request)
         return image_upload_request
     #handlers
