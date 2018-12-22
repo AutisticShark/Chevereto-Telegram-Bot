@@ -70,7 +70,7 @@ def main():
 
     def cache_clean(bot, update):
         cache_path = os.getcwd()
-        cache_files_list = glob.glob(os.path.join(cache_path, "*.jpg"))
+        cache_files_list = glob.glob(os.path.join(cache_path, "*.jpg", "*.cache"))
         for cache in cache_files_list:
             os.remove(cache) 
         bot.send_message(chat_id=update.message.chat_id, text='All upload cache are cleared')
@@ -100,6 +100,25 @@ def main():
             update.message.reply_text(uploaded_info)
         else:
             update.message.reply_text('Image Host error! Please try again later.')
+
+    def image_file(bot, update):
+        allowed_image_file_format = 'image/jpeg image/png image/bmp image/gif'
+        image_file_id = update.message.document[-1].file_id
+        image_file_name = '%s.cache' % str(uuid.uuid4())
+        image_file = bot.getFile(image_file_id)
+        image_file.download(image_file_name)
+        image_file_mime = mimetypes.guess_type(image_file_name)[0]
+        if image_file_mime in allowed_image_file_format:
+            update.message.reply_text('Download complete, now uploading...')
+            return_data = image_upload(request_format(image_file_name))
+            if return_data['status_code'] == 200:
+                uploaded_info = 'Upload succeeded!\nHere are your links to this image:\nWeb viewer: ' + return_data['image']['url_viewer'] + '\nOrigin size: ' + return_data['image']['url']# + '\n Medium size:' + return_data['medium']['url']
+                update.message.reply_text(uploaded_info)
+            else:
+                update.message.reply_text('Image Host error! Please try again later.')
+        else:
+            update.message.reply_text('Please send me .JPG .PNG .BMP .GIF format file only!')
+            os.remove(image_file_name)
 
     def image_upload(images):
         image_host = config['HOST']['IMAGE_HOST']
@@ -134,6 +153,9 @@ def main():
     #處理用戶發送的圖片
     image_handler = MessageHandler(Filters.photo, image)
     dp.add_handler(image_handler)
+    #處理用戶發送的圖片文件
+    image_file_handler = MessageHandler(Filters.document, image_file)
+    dp.add_handler(image_file_handler)
     #處理用戶私聊發送的未知訊息
     unknow_msg_handler = MessageHandler(Filters.private, unknow_msg)
     dp.add_handler(unknow_msg_handler)
