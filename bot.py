@@ -134,7 +134,7 @@ def main():
     #構造upload請求
     def request_format(image_name):
         image_upload_request = []
-        image_type = mimetypes.guess_type(image_name)[0]
+        image_type = magic.from_file(image_name, mime=True)
         image_upload_request.append(('source' , (image_name , open(image_name , 'rb') , image_type)))
         print(image_upload_request)
         return image_upload_request
