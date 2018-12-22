@@ -100,7 +100,9 @@ def main():
             uploaded_info = 'Upload succeeded!\nHere are your links to this image:\nWeb viewer: ' + return_data['image']['url_viewer'] + '\nOrigin size: ' + return_data['image']['url']# + '\n Medium size:' + return_data['medium']['url']
             update.message.reply_text(uploaded_info)
         else:
+            print(return_data)
             update.message.reply_text('Image Host error! Please try again later.')
+            os.remove(image_name)
 
     @send_typing_action
     def image_file(bot, update):
@@ -117,7 +119,9 @@ def main():
                 uploaded_info = 'Upload succeeded!\nHere are your links to this image:\nWeb viewer: ' + return_data['image']['url_viewer'] + '\nOrigin size: ' + return_data['image']['url']# + '\n Medium size:' + return_data['medium']['url']
                 update.message.reply_text(uploaded_info)
             else:
+                print(return_data)
                 update.message.reply_text('Image Host error! Please try again later.')
+                os.remove(image_file_name)
         else:
             update.message.reply_text('Please send me .JPG .PNG .BMP .GIF format file only!')
             os.remove(image_file_name)
