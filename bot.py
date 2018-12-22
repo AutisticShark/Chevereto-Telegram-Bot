@@ -101,9 +101,10 @@ def main():
         else:
             update.message.reply_text('Image Host error! Please try again later.')
 
+    @send_typing_action
     def image_file(bot, update):
         allowed_image_file_format = 'image/jpeg image/png image/bmp image/gif'
-        image_file_id = update.message.document[-1].file_id
+        image_file_id = update.message.document.file_id
         image_file_name = '%s.cache' % str(uuid.uuid4())
         image_file = bot.getFile(image_file_id)
         image_file.download(image_file_name)
