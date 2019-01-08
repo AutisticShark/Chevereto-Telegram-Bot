@@ -3,10 +3,10 @@
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from functools import wraps
+from threading import Thread
 import os
 import os.path
 import sys
-from threading import Thread 
 import glob
 import telegram
 import requests
