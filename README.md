@@ -13,7 +13,7 @@
 > 5 . Run bot.py   
 ## config.ini explanation   
 [BOT]   
-MODE = PULLING or WEBHOOK(gugugu or WiP)   
+MODE = PULLING or WEBHOOK(WiP)   
 ACCESS_TOKEN = Your bot's API key, @botfather to create one if you don't have this.  
 WEBHOOK_URL = Your bot's Webhook url, which you can configure it via @botfather, too.   
 ADMIN_USER = Your Telegram's username, for example @m1scew_bot (The "@" must be inclueded!), only this user can use bot's /restart command.   
