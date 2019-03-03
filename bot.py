@@ -94,7 +94,7 @@ def main():
         image_name = '%s.jpg' % str(uuid.uuid4())
         image = bot.getFile(image_id)
         image.download(image_name)
-        update.message.reply_text('Download complete, now uploading...')
+        update.message.reply_text('Download complete, now uploading to image host...')
         return_data = image_upload(request_format(image_name))
         if return_data['status_code'] == 200:
             uploaded_info = 'Upload succeeded!\nHere are your links to this image:\nWeb viewer: ' + return_data['image']['url_viewer'] + '\nOrigin size: ' + return_data['image']['url']# + '\n Medium size:' + return_data['medium']['url']
@@ -113,7 +113,7 @@ def main():
         image_file.download(image_file_name)
         image_file_mime = magic.from_file(image_file_name, mime=True)
         if image_file_mime in allowed_image_file_format:
-            update.message.reply_text('Download complete, now uploading...')
+            update.message.reply_text('Download complete, now uploading to image host...')
             return_data = image_upload(request_format(image_file_name))
             if return_data['status_code'] == 200:
                 uploaded_info = 'Upload succeeded!\nHere are your links to this image:\nWeb viewer: ' + return_data['image']['url_viewer'] + '\nOrigin size: ' + return_data['image']['url']# + '\n Medium size:' + return_data['medium']['url']
