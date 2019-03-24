@@ -170,7 +170,7 @@ def main():
     if config['BOT']['MODE'] == 'PULLING':
         updater.start_polling()
     elif config['BOT']['MODE'] == 'WEBHOOK':
-        bot_webhook_url = 'https://' + config['BOT']['WEBHOOK_URL'] + config['BOT']['ACCESS_TOKEN']
+        bot_webhook_url = 'https://' + config['BOT']['WEBHOOK_URL'] + ':' + config['BOT']['WEBHOOK_PORT'] + '/' + config['BOT']['ACCESS_TOKEN']
         updater.start_webhook(listen = "0.0.0.0",
                               port = int(config['BOT']['WEBHOOK_PORT']),
                               key = config['BOT']['WEBHOOK_KEY'],
