@@ -19,7 +19,7 @@ WEBHOOK_URL = Your bot's Webhook url, which you can configure it via @botfather,
 WEBHOOK_PORT = Due to python-telegram-bot's build-in HTTP server's limite, you can only choose one from 443, 80, 88 or 8443      
 WEBHOOK_KEY = Your can create one with follow command    
 
-   openssl req -newkey rsa:2048 -sha256 -nodes -keyout KEYNAME.key -x509 -days 3650 -out CERTNAME.pem    
+    openssl req -newkey rsa:2048 -sha256 -nodes -keyout KEYNAME.key -x509 -days 3650 -out CERTNAME.pem    
 
 WEBHOOK_CERT = same as WEBHOOK_KEY    
 ADMIN_USER = Your Telegram's username, for example @m1scew_bot (The "@" must be inclueded!), only this user can use bot's /restart command.   
