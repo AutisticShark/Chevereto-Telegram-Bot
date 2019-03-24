@@ -172,7 +172,7 @@ def main():
     elif config['BOT']['MODE'] == 'WEBHOOK':
         bot_webhook_url = 'https://' + config['BOT']['WEBHOOK_URL'] + config['BOT']['ACCESS_TOKEN']
         updater.start_webhook(listen = "0.0.0.0",
-                              port = config['BOT']['WEBHOOK_PORT'],
+                              port = int(config['BOT']['WEBHOOK_PORT']),
                               key = config['BOT']['WEBHOOK_KEY'],
                               cert = config['BOT']['WEBHOOK_CERT'],
                               url_path = config['BOT']['ACCESS_TOKEN'],
