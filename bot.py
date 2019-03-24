@@ -26,7 +26,8 @@ config = configparser.ConfigParser()
 config.read('config.ini')
 
 def main():
-    updater = Updater(config['BOT']['ACCESS_TOKEN'])#填你bot的API Key
+    
+    updater = Updater(config['BOT']['ACCESS_TOKEN'])
     dp = updater.dispatcher
     #handler functions
     def send_typing_action(function):
