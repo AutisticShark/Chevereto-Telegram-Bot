@@ -18,15 +18,14 @@ import magic
 import logging
 
 #錯誤logging
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+logging.basicConfig(format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s', level = logging.INFO)
 logger = logging.getLogger(__name__)
 
 #加載config
 config = configparser.ConfigParser()
 config.read('config.ini')
 
-def main():
-    
+def main():    
     updater = Updater(config['BOT']['ACCESS_TOKEN'])
     dp = updater.dispatcher
     #handler functions
@@ -34,26 +33,26 @@ def main():
         @wraps(function)
         def command_function(*args, **kwargs):
             bot, update = args
-            bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)
+            bot.send_chat_action(chat_id = update.message.chat_id, action = telegram.ChatAction.TYPING)
             function(bot, update, **kwargs)
         return command_function
 
     @send_typing_action
     def help(bot, update):
-        bot.send_message(chat_id=update.message.chat_id, text='Send me some pictures or image file. Available format: .jpg, .png, .bmp, .gif, 20MB max file size.')
+        bot.send_message(chat_id = update.message.chat_id, text = 'Send me some pictures or image file. Available format: .jpg, .png, .bmp, .gif, 20MB max file size.')
 
     def privacy(bot, update):
-        bot.send_message(chat_id=update.message.chat_id, text="This bot is only designed to rely your media file, all of your presonal data will not storage on our server, for more usage info please check the image host's ToS/AUP site, thank you.")
+        bot.send_message(chat_id = update.message.chat_id, text = "This bot is only designed to rely your media file, all of your presonal data will not storage on our server, for more usage info please check the image host's ToS/AUP site, thank you.")
 
     def uptime(bot, update):
         uptime_command = os.popen("uptime")
         uptime_output = uptime_command.read()
-        bot.send_message(chat_id=update.message.chat_id, text=uptime_output)
+        bot.send_message(chat_id = update.message.chat_id, text = uptime_output)
 
     def storage_status(bot, update):
         storage_status_command = os.popen("df -lh")
         storage_status_output = storage_status_command.read()
-        bot.send_message(chat_id=update.message.chat_id, text=storage_status_output)
+        bot.send_message(chat_id = update.message.chat_id, text = storage_status_output)
 
     def cache_status(bot, update):
         cache_path = os.getcwd()
@@ -75,7 +74,7 @@ def main():
         cache_files_list = glob.glob(os.path.join(cache_path, "*.jpg", "*.cache"))
         for cache in cache_files_list:
             os.remove(cache) 
-        bot.send_message(chat_id=update.message.chat_id, text='All upload cache are cleared')
+        bot.send_message(chat_id = update.message.chat_id, text = 'All upload cache are cleared')
 
     def restart_action():
         updater.stop()
@@ -83,11 +82,11 @@ def main():
 
     def restart(bot, update):
         update.message.reply_text('Bot is restarting...')
-        Thread(target=restart_action).start()
+        Thread(target = restart_action).start()
 
     @send_typing_action
     def unknow_msg(bot, update):
-        bot.send_message(chat_id=update.message.chat_id, text='Please send me pictures or image file only!')
+        bot.send_message(chat_id = update.message.chat_id, text = 'Please send me pictures or image file only!')
 
     @send_typing_action
     def image(bot, update):
@@ -157,7 +156,7 @@ def main():
     #/cache_clean指令處理
     dp.add_handler(CommandHandler("cache_clean", cache_clean))
     #/restart指令處理
-    dp.add_handler(CommandHandler("restart", restart, filters=Filters.user(username=config['BOT']['ADMIN_USER'])))
+    dp.add_handler(CommandHandler("restart", restart, filters=Filters.user(username = config['BOT']['ADMIN_USER'])))
     #處理用戶發送的圖片
     image_handler = MessageHandler(Filters.photo, image)
     dp.add_handler(image_handler)
@@ -168,7 +167,18 @@ def main():
     unknow_msg_handler = MessageHandler(Filters.private, unknow_msg)
     dp.add_handler(unknow_msg_handler)
     #啓動進程
-    updater.start_polling()
+    if config['BOT']['MODE'] == 'PULLING':
+        updater.start_polling()
+    elif config['BOT']['MODE'] == 'WEBHOOK':
+        bot_webhook_url = 'https://' + config['BOT']['WEBHOOK_URL'] + config['BOT']['ACCESS_TOKEN']
+        updater.start_webhook(listen = "0.0.0.0",
+                              port = config['BOT']['WEBHOOK_PORT'],
+                              key = config['BOT']['WEBHOOK_KEY'],
+                              cert = config['BOT']['WEBHOOK_CERT'],
+                              url_path = config['BOT']['ACCESS_TOKEN'],
+                              webhook_url = bot_webhook_url)
+    else:
+        exit()
     updater.idle()
 
 if __name__ == '__main__':
