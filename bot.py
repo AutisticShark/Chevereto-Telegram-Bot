@@ -97,7 +97,7 @@ def main():
         update.message.reply_text('Download complete, now uploading to image host...')
         return_data = image_upload(request_format(image_name))
         if return_data['status_code'] == 200:
-            uploaded_info = 'Upload succeeded!\nHere are your links to this image:\nWeb viewer: ' + return_data['image']['url_viewer'] + '\nOrigin size: ' + return_data['image']['url']# + '\n Medium size:' + return_data['medium']['url']
+            uploaded_info = 'Upload succeeded!\nHere are your links to this image:\nWeb viewer: ' + return_data['image']['url_viewer'] + '\nDirect Link: ' + return_data['image']['url']
             update.message.reply_text(uploaded_info)
         else:
             print(return_data)
