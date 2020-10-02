@@ -1,4 +1,4 @@
-#!/usr/bin/python3.7
+#!/usr/bin/python3.8
 # coding:utf-8
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
