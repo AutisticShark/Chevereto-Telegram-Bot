@@ -1,5 +1,5 @@
 asn1crypto==0.24.0
-astroid==2.1.0
+astroid==2.4.2
 certifi==2020.6.20
 cffi==1.11.5
 chardet==3.0.4
