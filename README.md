@@ -13,7 +13,7 @@
 > 5 . Run bot.py   
 ## config.ini explanation & how to setup   
 [BOT]   
-MODE = PULLING or WEBHOOK
+MODE = PULLING or WEBHOOK    
 ACCESS_TOKEN = Your bot's API key, @botfather to create one if you don't have this.  
 WEBHOOK_URL = Your bot's Webhook url, which you can configure it via @botfather, too.   
 WEBHOOK_PORT = Due to python-telegram-bot's build-in HTTP server's limite, you can only choose one from 443, 80, 88 or 8443      
