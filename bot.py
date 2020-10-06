@@ -32,33 +32,33 @@ def main():
     def send_typing_action(function):
         @wraps(function)
         def command_function(update, context, *args, **kwargs):
-            bot.send_chat_action(chat_id = update.message.chat_id, action = telegram.ChatAction.TYPING)
+            context.bot.send_chat_action(chat_id = update.message.chat_id, action = telegram.ChatAction.TYPING)
             function(update, context, *args, **kwargs)
         return command_function
 
     @send_typing_action
     def help(update, context):
-        bot.send_message(chat_id = update.message.chat_id, text = 'Send me some pictures or image file. Available format: .jpg, .png, .bmp, .gif, 20MB max file size.')
+        context.bot.send_message(chat_id = update.message.chat_id, text = 'Send me some pictures or image file. Available format: .jpg, .png, .bmp, .gif, 20MB max file size.')
 
     def privacy(update, context):
-        bot.send_message(chat_id = update.message.chat_id, text = "This bot is only designed to rely your media file, all of your presonal data will not storage on our server, for more usage info please check the image host's ToS/AUP site, thank you.")
+        context.bot.send_message(chat_id = update.message.chat_id, text = "This bot is only designed to rely your media file, all of your presonal data will not storage on our server, for more usage info please check the image host's ToS/AUP site, thank you.")
 
     def uptime(update, context):
         uptime_command = os.popen("uptime")
         uptime_output = uptime_command.read()
-        bot.send_message(chat_id = update.message.chat_id, text = uptime_output)
+        context.bot.send_message(chat_id = update.message.chat_id, text = uptime_output)
 
     def storage_status(update, context):
         storage_status_command = os.popen("df -lh")
         storage_status_output = storage_status_command.read()
-        bot.send_message(chat_id = update.message.chat_id, text = storage_status_output)
+        context.bot.send_message(chat_id = update.message.chat_id, text = storage_status_output)
 
     def cache_status(update, context):
         cache_path = os.getcwd()
         cache_files_count = str(len([name for name in os.listdir(cache_path) if os.path.isfile(os.path.join(cache_path, name))]) - 1)
         cache_files_size = str(cache_files_size_count(cache_path))
         cache_status_message = 'Current cache status:\nCache files count: ' + cache_files_count + '\nCache files size: ' + cache_files_size
-        bot.send_message(chat_id = update.message.chat_id, text = cache_status_message)
+        context.bot.send_message(chat_id = update.message.chat_id, text = cache_status_message)
 
     def cache_files_size_count(cache_path):
         size = 0
@@ -73,7 +73,7 @@ def main():
         cache_files_list = glob.glob(os.path.join(cache_path, "*.jpg", "*.cache"))
         for cache in cache_files_list:
             os.remove(cache) 
-        bot.send_message(chat_id = update.message.chat_id, text = 'All upload cache are cleared')
+        context.bot.send_message(chat_id = update.message.chat_id, text = 'All upload cache are cleared')
 
     def restart_action():
         updater.stop()
@@ -85,7 +85,7 @@ def main():
 
     @send_typing_action
     def unknow_msg(update, context):
-        bot.send_message(chat_id = update.message.chat_id, text = 'Please send me pictures or image file only!')
+        context.bot.send_message(chat_id = update.message.chat_id, text = 'Please send me pictures or image file only!')
 
     @send_typing_action
     def image(update, context):
