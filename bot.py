@@ -31,10 +31,9 @@ def main():
     #handler functions
     def send_typing_action(function):
         @wraps(function)
-        def command_function(*args, **kwargs):
-            bot, update = args
+        def command_function(update, context, *args, **kwargs):
             bot.send_chat_action(chat_id = update.message.chat_id, action = telegram.ChatAction.TYPING)
-            function(update: Update, context: CallbackContext, **kwargs)
+            function(update, context, *args, **kwargs)
         return command_function
 
     @send_typing_action
