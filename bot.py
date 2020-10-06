@@ -26,7 +26,7 @@ config = configparser.ConfigParser()
 config.read('config.ini')
 
 def main():    
-    updater = Updater(config['BOT']['ACCESS_TOKEN'])
+    updater = Updater(config['BOT']['ACCESS_TOKEN'], use_context=True)
     dp = updater.dispatcher
     #handler functions
     def send_typing_action(function):
