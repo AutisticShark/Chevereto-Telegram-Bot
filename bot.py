@@ -34,27 +34,27 @@ def main():
         def command_function(*args, **kwargs):
             bot, update = args
             bot.send_chat_action(chat_id = update.message.chat_id, action = telegram.ChatAction.TYPING)
-            function(bot, update, **kwargs)
+            function(update: Update, context: CallbackContext, **kwargs)
         return command_function
 
     @send_typing_action
-    def help(bot, update):
+    def help(update: Update, context: CallbackContext):
         bot.send_message(chat_id = update.message.chat_id, text = 'Send me some pictures or image file. Available format: .jpg, .png, .bmp, .gif, 20MB max file size.')
 
-    def privacy(bot, update):
+    def privacy(bot, updateupdate: Update, context: CallbackContext):
         bot.send_message(chat_id = update.message.chat_id, text = "This bot is only designed to rely your media file, all of your presonal data will not storage on our server, for more usage info please check the image host's ToS/AUP site, thank you.")
 
-    def uptime(bot, update):
+    def uptime(update: Update, context: CallbackContext):
         uptime_command = os.popen("uptime")
         uptime_output = uptime_command.read()
         bot.send_message(chat_id = update.message.chat_id, text = uptime_output)
 
-    def storage_status(bot, update):
+    def storage_status(update: Update, context: CallbackContext):
         storage_status_command = os.popen("df -lh")
         storage_status_output = storage_status_command.read()
         bot.send_message(chat_id = update.message.chat_id, text = storage_status_output)
 
-    def cache_status(bot, update):
+    def cache_status(update: Update, context: CallbackContext):
         cache_path = os.getcwd()
         cache_files_count = str(len([name for name in os.listdir(cache_path) if os.path.isfile(os.path.join(cache_path, name))]) - 1)
         cache_files_size = str(cache_files_size_count(cache_path))
@@ -69,7 +69,7 @@ def main():
                 size += os.path.getsize(fp)
         return size
 
-    def cache_clean(bot, update):
+    def cache_clean(update: Update, context: CallbackContext):
         cache_path = os.getcwd()
         cache_files_list = glob.glob(os.path.join(cache_path, "*.jpg", "*.cache"))
         for cache in cache_files_list:
@@ -80,16 +80,16 @@ def main():
         updater.stop()
         os.execl(sys.executable, sys.executable, *sys.argv)
 
-    def restart(bot, update):
+    def restart(update: Update, context: CallbackContext):
         update.message.reply_text('Bot is restarting...')
         Thread(target = restart_action).start()
 
     @send_typing_action
-    def unknow_msg(bot, update):
+    def unknow_msg(update: Update, context: CallbackContext):
         bot.send_message(chat_id = update.message.chat_id, text = 'Please send me pictures or image file only!')
 
     @send_typing_action
-    def image(bot, update):
+    def image(update: Update, context: CallbackContext):
         image_id = update.message.photo[-1].file_id
         image_name = '%s.jpg' % str(uuid.uuid4())
         image = bot.getFile(image_id)
@@ -105,7 +105,7 @@ def main():
             os.remove(image_name)
 
     @send_typing_action
-    def image_file(bot, update):
+    def image_file(update: Update, context: CallbackContext):
         allowed_image_file_format = 'image/jpeg image/png image/bmp image/gif'
         image_file_id = update.message.document.file_id
         image_file_name = '%s.cache' % str(uuid.uuid4())
