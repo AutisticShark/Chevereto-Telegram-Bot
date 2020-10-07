@@ -40,9 +40,6 @@ def main():
     def help(update, context):
         context.bot.send_message(chat_id = update.message.chat_id, text = 'Send me some pictures or image file. Available format: .jpg, .png, .bmp, .gif, 20MB max file size.')
 
-    def privacy(update, context):
-        context.bot.send_message(chat_id = update.message.chat_id, text = "This bot is only designed to rely your media file, all of your presonal data will not storage on our server, for more usage info please check the image host's ToS/AUP site, thank you.")
-
     def uptime(update, context):
         uptime_command = os.popen("uptime")
         uptime_output = uptime_command.read()
