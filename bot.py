@@ -141,8 +141,6 @@ def main():
     #handlers
     #/help指令處理
     dp.add_handler(CommandHandler("help", help))
-    #/privacy指令處理
-    dp.add_handler(CommandHandler("privacy", privacy))
     #/uptime指令處理
     dp.add_handler(CommandHandler("uptime", uptime))
     #/storage_status指令處理
