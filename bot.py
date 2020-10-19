@@ -68,7 +68,7 @@ def main():
 
     def cache_clean(update, context):
         cache_path = os.getcwd()+'/cache'
-        cache_files_list = glob.glob(os.path.join(cache_path, '*.jpg', '*.cache'))
+        cache_files_list = glob.glob(os.path.join(cache_path, '.jpg', '.cache'))
         for cache in cache_files_list:
             os.remove(cache) 
         context.bot.send_message(chat_id = update.message.chat_id, text = 'All upload cache are cleared')
