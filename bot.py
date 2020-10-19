@@ -53,7 +53,7 @@ def main():
 
     def cache_status(update, context):
         cache_path = os.getcwd()+'/cache'
-        cache_files_count = str(len([name for name in os.listdir(cache_path) if os.path.isfile(os.path.join(cache_path, name))]) - 1)
+        cache_files_count = str(len([name for name in os.listdir(cache_path) if os.path.isfile(os.path.join(cache_path, name))]))
         cache_files_size = str(cache_files_size_count(cache_path))
         cache_status_message = 'Current cache status:\nCache files count: ' + cache_files_count + '\nCache files size: ' + cache_files_size
         context.bot.send_message(chat_id = update.message.chat_id, text = cache_status_message)
