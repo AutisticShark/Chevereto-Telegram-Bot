@@ -15,6 +15,7 @@ import json
 import uuid
 import mimetypes
 import magic
+import shutil
 import logging
 
 #錯誤logging
@@ -95,6 +96,7 @@ def main():
         if return_data['status_code'] == 200:
             uploaded_info = 'Upload succeeded!\nHere are your links to this image:\nWeb viewer: ' + return_data['image']['url_viewer'] + '\nDirect Link: ' + return_data['image']['url']
             update.message.reply_text(uploaded_info)
+            shutil.move(image_name, 'cache/'+image_name)
         else:
             print(return_data)
             update.message.reply_text('Image Host error! Please try again later.')
