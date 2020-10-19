@@ -52,7 +52,7 @@ def main():
         context.bot.send_message(chat_id = update.message.chat_id, text = storage_status_output)
 
     def cache_status(update, context):
-        cache_path = os.getcwd()
+        cache_path = os.getcwd()+'/cache'
         cache_files_count = str(len([name for name in os.listdir(cache_path) if os.path.isfile(os.path.join(cache_path, name))]) - 1)
         cache_files_size = str(cache_files_size_count(cache_path))
         cache_status_message = 'Current cache status:\nCache files count: ' + cache_files_count + '\nCache files size: ' + cache_files_size
@@ -67,7 +67,7 @@ def main():
         return size
 
     def cache_clean(update, context):
-        cache_path = os.getcwd()
+        cache_path = os.getcwd()+'/cache'
         cache_files_list = glob.glob(os.path.join(cache_path, "*.jpg", "*.cache"))
         for cache in cache_files_list:
             os.remove(cache) 
@@ -94,9 +94,9 @@ def main():
         update.message.reply_text('Downloading image from Telegram...')
         return_data = image_upload(request_format(image_name))
         if return_data['status_code'] == 200:
+            shutil.move(image_name, 'cache/'+image_name)
             uploaded_info = 'Upload succeeded!\nHere are your links to this image:\nWeb viewer: ' + return_data['image']['url_viewer'] + '\nDirect Link: ' + return_data['image']['url']
             update.message.reply_text(uploaded_info)
-            shutil.move(image_name, 'cache/'+image_name)
         else:
             print(return_data)
             update.message.reply_text('Image Host error! Please try again later.')
@@ -114,6 +114,7 @@ def main():
             update.message.reply_text('Downloading image file from Telegram...')
             return_data = image_upload(request_format(image_file_name))
             if return_data['status_code'] == 200:
+                shutil.move(image_name, 'cache/'+image_name)
                 uploaded_info = 'Upload succeeded!\nHere are your links to this image:\nWeb viewer: ' + return_data['image']['url_viewer'] + '\nOrigin size: ' + return_data['image']['url']# + '\n Medium size:' + return_data['medium']['url']
                 update.message.reply_text(uploaded_info)
             else:
@@ -162,6 +163,9 @@ def main():
     #處理用戶私聊發送的未知訊息
     unknow_msg_handler = MessageHandler(Filters.private, unknow_msg)
     dp.add_handler(unknow_msg_handler)
+    #檢查緩存目錄是否存在
+    if not os.path.exists('cache''):
+    os.makedirs('cache')
     #啓動進程
     if config['BOT']['MODE'] == 'PULLING':
         updater.start_polling()
