@@ -164,7 +164,7 @@ def main():
     unknow_msg_handler = MessageHandler(Filters.private, unknow_msg)
     dp.add_handler(unknow_msg_handler)
     #檢查緩存目錄是否存在
-    if not os.path.exists('cache''):
+    if not os.path.exists('cache'):
     os.makedirs('cache')
     #啓動進程
     if config['BOT']['MODE'] == 'PULLING':
