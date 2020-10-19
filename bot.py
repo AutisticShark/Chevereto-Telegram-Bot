@@ -114,7 +114,7 @@ def main():
             update.message.reply_text('Downloading image file from Telegram...')
             return_data = image_upload(request_format(image_file_name))
             if return_data['status_code'] == 200:
-                shutil.move(image_name, 'cache/'+image_name)
+                shutil.move(image_file_name, 'cache/'+image_file_name)
                 uploaded_info = 'Upload succeeded!\nHere are your links to this image:\nWeb viewer: ' + return_data['image']['url_viewer'] + '\nOrigin size: ' + return_data['image']['url']# + '\n Medium size:' + return_data['medium']['url']
                 update.message.reply_text(uploaded_info)
             else:
