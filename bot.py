@@ -165,7 +165,7 @@ def main():
     dp.add_handler(unknow_msg_handler)
     #檢查緩存目錄是否存在
     if not os.path.exists('cache'):
-    os.makedirs('cache')
+        os.makedirs('cache')
     #啓動進程
     if config['BOT']['MODE'] == 'PULLING':
         updater.start_polling()
