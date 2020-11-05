@@ -10,7 +10,10 @@
     pip3.9 install -r requirements.txt
 
 > 4 . Copy config.ini.new to config.ini, then edit it   
-> 5 . nohup python3.9 bot.py &   
+> 5 . Run the bot in the background using follow command
+
+    nohup python3.9 bot.py &
+
 ## config.ini Explanation 
 [BOT]   
 MODE = PULLING or WEBHOOK    
