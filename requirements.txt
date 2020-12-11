@@ -2,7 +2,7 @@ asn1crypto==1.4.0
 astroid==2.4.2
 certifi==2020.12.5
 cffi==1.14.4
-chardet==3.0.4
+chardet==4.0.0
 cryptography==3.3.1
 future==0.18.2
 idna==2.10
