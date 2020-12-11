@@ -164,7 +164,7 @@ def main():
     image_file_handler = MessageHandler(Filters.document, image_file)
     dp.add_handler(image_file_handler)
     #處理用戶私聊發送的未知訊息
-    unknow_msg_handler = MessageHandler(Filters.private, unknow_msg)
+    unknow_msg_handler = MessageHandler(Filters.chat_type.private, unknow_msg)
     dp.add_handler(unknow_msg_handler)
     #檢查緩存目錄是否存在
     if not os.path.exists('cache'):
