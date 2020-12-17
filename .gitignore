@@ -1,4 +1,4 @@
 #忽略bot配置文件
 config.ini
 #忽略緩存文件
-*.jpg
+cache/*.*
