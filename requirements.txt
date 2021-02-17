@@ -3,7 +3,7 @@ astroid==2.5
 certifi==2020.12.5
 cffi==1.14.5
 chardet>=3.0.2
-cryptography==3.4.5
+cryptography==3.4.6
 future==0.18.2
 idna==2.10
 isort==5.7.0
