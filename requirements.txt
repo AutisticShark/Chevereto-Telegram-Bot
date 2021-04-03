@@ -10,7 +10,7 @@ isort==5.8.0
 lazy-object-proxy==1.6.0
 mccabe==0.6.1
 pycparser==2.20
-pylint==2.7.2
+pylint==2.7.4
 python-telegram-bot==13.4.1
 requests==2.25.1
 six==1.15.0
