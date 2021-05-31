@@ -1,22 +1,22 @@
 #!/usr/bin/python3.9
 # coding:utf-8
 
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-from functools import wraps
-from threading import Thread
+import configparser
+import glob
+import json
+import logging
+import magic
+import mimetypes
 import os
 import os.path
-import sys
-import glob
-import telegram
 import requests
-import configparser
-import json
-import uuid
-import mimetypes
-import magic
 import shutil
-import logging
+import sys
+import telegram
+import uuid
+from functools import wraps
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+from threading import Thread
 
 #錯誤logging
 logging.basicConfig(format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s', level = logging.INFO)
