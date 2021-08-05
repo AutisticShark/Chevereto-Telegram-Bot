@@ -2,7 +2,7 @@
 
 An easy-to-use telegram bot for add upload via Telegram feature to your Chevereto image host site.    
 
-[![c6b20838120f2afdb7d69ad4ed04444d.md.png](https://i.jpg.dog/img/c6b20838120f2afdb7d69ad4ed04444d.md.png)](https://jpg.dog/i/Z2dCG)
+[![c6b20838120f2afdb7d69ad4ed04444d.md.png](https://i.jpg.dog/file/jpg-dog/c6b20838120f2afdb7d69ad4ed04444d.md.png)](https://jpg.dog/i/Z2dCG)
 
 ## Installation Guide   
 > 1 . Install latest version of Python3.9 & pip   
