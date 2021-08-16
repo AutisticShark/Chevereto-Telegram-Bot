@@ -2,11 +2,9 @@
 # coding:utf-8
 
 import configparser
-import glob
 import json
 import logging
 import magic
-import mimetypes
 import os
 import os.path
 import requests
