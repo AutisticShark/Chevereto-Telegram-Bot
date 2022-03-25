@@ -4,13 +4,3 @@ updates:
   directory: "/"
   schedule:
     interval: daily
-  open-pull-requests-limit: 10
-  ignore:
-  - dependency-name: pylint
-    versions:
-    - 2.7.1
-    - 2.7.3
-    - 2.8.1
-  - dependency-name: cryptography
-    versions:
-    - 3.4.1
