@@ -2,24 +2,24 @@
 
 An easy-to-use telegram bot for add upload via Telegram feature to your Chevereto image host site.    
 
-[![c6b20838120f2afdb7d69ad4ed04444d.md.png](https://i.jpg.dog/file/jpg-dog/c6b20838120f2afdb7d69ad4ed04444d.md.png)](https://jpg.dog/i/Z2dCG)
+[![d3b3e8f2c9777461a3a287ac737d4ee9.png](https://i.jpg.dog/d3b3e8f2c9777461a3a287ac737d4ee9.png)](https://jpg.dog/i/CRib2)
 
 ## Installation Guide   
-> 1 . Install latest version of Python3.9 & pip   
+> 1 . Install latest version of Python3 & pip   
 > 2 . Clone bot file
 
     git clone https://github.com/M1Screw/Chevereto-Telegram-Bot.git
 
 > 3 . Enter Chevereto-Telegram-Bot folder, then install dependency
 
-    pip3.9 install -r requirements.txt
+    pip install -r requirements.txt
 
 > 4 . Copy config.ini.new to config.ini, then edit it   
 > 5 . Run the bot in the background using the following command
 
-    nohup python3.9 bot.py &
+    nohup python3 bot.py &
 
-## config.ini Explanation 
+## config.ini Example 
 [BOT]   
 MODE = PULLING or WEBHOOK    
 ACCESS_TOKEN = Your bot's API key. Talk to @botfather to create one if you don't have it.  
