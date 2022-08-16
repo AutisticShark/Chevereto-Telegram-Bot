@@ -3,5 +3,6 @@ config.ini
 #忽略緩存文件
 cache/*.*
 #忽略IDE文件
-venv/
-.idea/
+venv
+.idea
+.vscode
