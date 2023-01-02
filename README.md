@@ -30,7 +30,7 @@ WEBHOOK_KEY = You can create one with the following command
     openssl req -newkey rsa:2048 -sha256 -nodes -keyout private.key -x509 -days 3650 -out cert.pem    
 
 WEBHOOK_CERT = same as WEBHOOK_KEY    
-ADMIN_USER = Your Telegram's username,  must include the "@"!, only this user can use the bot's admin command for example /restart.   
+ADMIN_USER = Your Telegram's user id, only this user can use the bot's admin command for example /restart.   
 [HOST]   
 IMAGE_HOST = The domain name of your image host site(without "https://" part)   
 IMAGE_HOST_API_KEY = You can find it on https://your-image-host/dashboard/settings/api   
