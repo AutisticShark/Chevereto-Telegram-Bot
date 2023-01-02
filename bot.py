@@ -34,24 +34,24 @@ def send_typing_action(function):
 
 @send_typing_action
 async def help(update, context):
-    context.bot.send_message(chat_id = update.message.chat_id, text = 'Send me some pictures or image file. Available format: .jpg, .png, bmp, .gif, 20MB max file size.')
+    await context.bot.send_message(chat_id = update.message.chat_id, text = 'Send me some pictures or image file. Available format: .jpg, .png, bmp, .gif, 20MB max file size.')
 
 async def uptime(update, context):
     uptime_command = os.popen("uptime")
     uptime_output = uptime_command.read()
-    context.bot.send_message(chat_id = update.message.chat_id, text = uptime_output)
+    await context.bot.send_message(chat_id = update.message.chat_id, text = uptime_output)
 
 async def storage_status(update, context):
     storage_status_command = os.popen("df -lh")
     storage_status_output = storage_status_command.read()
-    context.bot.send_message(chat_id = update.message.chat_id, text = storage_status_output)
+    await context.bot.send_message(chat_id = update.message.chat_id, text = storage_status_output)
 
 async def cache_status(update, context):
     cache_path = os.getcwd()+'/cache'
     cache_files_count = str(len([name for name in os.listdir(cache_path) if os.path.isfile(os.path.join(cache_path, name))]))
     cache_files_size = str(cache_files_size_count(cache_path))
     cache_status_message = 'Current cache status:\nCache files count: ' + cache_files_count + '\nCache files size: ' + cache_files_size
-    context.bot.send_message(chat_id = update.message.chat_id, text = cache_status_message)
+    await context.bot.send_message(chat_id = update.message.chat_id, text = cache_status_message)
 
 def cache_files_size_count(cache_path):
     size = 0
@@ -61,7 +61,7 @@ def cache_files_size_count(cache_path):
             size += os.path.getsize(fp)
     return size
 
-def cache_clean(update, context):
+async def cache_clean(update, context):
     cache_path = os.getcwd()+'/cache'
     cache_files_list = os.listdir(cache_path)
     for cache in cache_files_list:
@@ -69,14 +69,14 @@ def cache_clean(update, context):
             os.remove(os.path.join(cache_path, cache))
         elif cache.endswith(".cache"):
             os.remove(os.path.join(cache_path, cache))
-    context.bot.send_message(chat_id = update.message.chat_id, text = 'All upload cache are cleared')
+    await context.bot.send_message(chat_id = update.message.chat_id, text = 'All upload cache are cleared')
 
 def restart_action():
     updater.stop()
     os.execl(sys.executable, sys.executable, *sys.argv)
 
-def restart(update, context):
-    update.message.reply_text('Bot is restarting...')
+async def restart(update, context):
+    await context.bot.send_message(chat_id = update.message.chat_id, text = 'Bot is restarting...')
     Thread(target = restart_action).start()
 
 @send_typing_action
