@@ -87,7 +87,7 @@ async def unknow_msg(update, context):
 async def image(update, context):
     image_id = update.message.photo[-1].file_id
     image_name = '%s.jpg' % str(uuid.uuid4())
-    image = context.bot.getFile(image_id)
+    image = await context.bot.getFile(image_id)
     image.download_to_drive(image_name)
     update.message.reply_text('Downloading image from Telegram...')
     return_data = image_upload(request_format(image_name))
@@ -105,7 +105,7 @@ async def image_file(update, context):
     allowed_image_file_format = 'image/jpeg image/png image/bmp image/gif'
     image_file_id = update.message.document.file_id
     image_file_name = '%s.cache' % str(uuid.uuid4())
-    image_file = context.bot.getFile(image_file_id)
+    image_file = await context.bot.getFile(image_file_id)
     image_file.download_to_drive(image_file_name)
     image_file_mime = magic.from_file(image_file_name, mime=True)
     if image_file_mime in allowed_image_file_format:
