@@ -29,7 +29,7 @@ def send_typing_action(function):
     @wraps(function)
     async def command_function(update, context, *args, **kwargs):
         await context.bot.send_chat_action(chat_id = update.message.chat_id, action = telegram.constants.ChatAction.TYPING)
-        function(update, context, *args, **kwargs)
+        await function(update, context, *args, **kwargs)
     return command_function
 
 @send_typing_action
