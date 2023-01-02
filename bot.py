@@ -85,11 +85,11 @@ async def unknow_msg(update, context):
 
 @send_typing_action
 async def image(update, context):
-    image_id = message.photo[-1].file_id
+    image_id = update.message.photo[-1].file_id
     image_name = '%s.jpg' % str(uuid.uuid4())
-    image = await bot.get_file(image_id)
+    image = await context.bot.get_file(image_id)
     await image.download_to_drive(image_name)
-    message.reply_text('Downloading image from Telegram...')
+    update.message.reply_text('Downloading image from Telegram...')
     return_data = image_upload(request_format(image_name))
     if return_data['status_code'] == 200:
         shutil.move(image_name, 'cache/'+image_name)
@@ -102,10 +102,10 @@ async def image(update, context):
 
 @send_typing_action
 async def image_file(update, context):
-    allowed_image_file_format = 'image/jpeg image/png image/bmp image/gif'
-    image_file_id = message.document.file_id
+    allowed_image_file_format = 'image/jpeg image/png image/bmp image/gif image/webp'
+    image_file_id = update.message.document.file_id
     image_file_name = '%s.cache' % str(uuid.uuid4())
-    image_file = await bot.get_file(image_file_id)
+    image_file = await contextbot.get_file(image_file_id)
     await image_file.download_to_drive(image_file_name)
     image_file_mime = magic.from_file(image_file_name, mime=True)
     if image_file_mime in allowed_image_file_format:
