@@ -28,7 +28,7 @@ config.read('config.ini')
 def send_typing_action(function):
     @wraps(function)
     def command_function(update, context, *args, **kwargs):
-        context.bot.send_chat_action(chat_id = update.message.chat_id, action = telegram.ChatAction.TYPING)
+        context.bot.send_chat_action(chat_id = update.message.chat_id, action = telegram.constants.ChatAction.TYPING)
         function(update, context, *args, **kwargs)
     return command_function
 
