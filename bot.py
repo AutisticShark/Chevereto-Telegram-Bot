@@ -89,7 +89,7 @@ async def image(update, context):
     image_name = '%s.jpg' % str(uuid.uuid4())
     image = await context.bot.get_file(image_id)
     await image.download_to_drive(image_name)
-    update.message.reply_text('Downloading image from Telegram...')
+    await update.message.reply_text('Downloading image from Telegram...')
     return_data = image_upload(request_format(image_name))
     if return_data['status_code'] == 200:
         shutil.move(image_name, 'cache/'+image_name)
@@ -109,7 +109,7 @@ async def image_file(update, context):
     await image_file.download_to_drive(image_file_name)
     image_file_mime = magic.from_file(image_file_name, mime=True)
     if image_file_mime in allowed_image_file_format:
-        update.message.reply_text('Downloading image file from Telegram...')
+        await update.message.reply_text('Downloading image file from Telegram...')
         return_data = image_upload(request_format(image_file_name))
         if return_data['status_code'] == 200:
             shutil.move(image_file_name, 'cache/'+image_file_name)
