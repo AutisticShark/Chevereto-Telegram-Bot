@@ -13,7 +13,7 @@ import sys
 import telegram
 import uuid
 from functools import wraps
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+from telegram.ext import Updater, CommandHandler, MessageHandler
 from threading import Thread
 
 #錯誤logging
@@ -154,15 +154,15 @@ def main():
     #/cache_clean指令處理
     dp.add_handler(CommandHandler("cache_clean", cache_clean))
     #/restart指令處理
-    dp.add_handler(CommandHandler("restart", restart, filters=Filters.user(username = config['BOT']['ADMIN_USER'])))
+    dp.add_handler(CommandHandler("restart", restart, filters.USER(username = config['BOT']['ADMIN_USER'])))
     #處理用戶發送的圖片
-    image_handler = MessageHandler(Filters.photo, image)
+    image_handler = MessageHandler(filters.PHOTO, image)
     dp.add_handler(image_handler)
     #處理用戶發送的圖片文件
-    image_file_handler = MessageHandler(Filters.document, image_file)
+    image_file_handler = MessageHandler(filters.Document.Category('image/'), image_file)
     dp.add_handler(image_file_handler)
     #處理用戶私聊發送的未知訊息
-    unknow_msg_handler = MessageHandler(Filters.chat_type.private, unknow_msg)
+    unknow_msg_handler = MessageHandler(filters.ChatType.PRIVATE, unknow_msg)
     dp.add_handler(unknow_msg_handler)
     #檢查緩存目錄是否存在
     if not os.path.exists('cache'):
