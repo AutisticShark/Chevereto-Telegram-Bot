@@ -149,13 +149,13 @@ def main():
     #/uptime指令處理
     bot.add_handler(CommandHandler("uptime", uptime))
     #/storage_status指令處理
-    bot.add_handler(CommandHandler("storage_status", storage_status, filters.USER(user_id = config['BOT']['ADMIN_USER_ID'])))
+    bot.add_handler(CommandHandler("storage_status", storage_status, filters=filters.User(user_id = config['BOT']['ADMIN_USER_ID'])))
     #/cache_status指令處理
-    bot.add_handler(CommandHandler("cache_status", cache_status, filters.USER(user_id = config['BOT']['ADMIN_USER_ID'])))
+    bot.add_handler(CommandHandler("cache_status", cache_status, filters=filters.User(user_id = config['BOT']['ADMIN_USER_ID'])))
     #/cache_clean指令處理
-    bot.add_handler(CommandHandler("cache_clean", cache_clean, filters.USER(user_id = config['BOT']['ADMIN_USER_ID'])))
+    bot.add_handler(CommandHandler("cache_clean", cache_clean, filters=filters.User(user_id = config['BOT']['ADMIN_USER_ID'])))
     #/restart指令處理
-    bot.add_handler(CommandHandler("restart", restart, filters.USER(user_id = config['BOT']['ADMIN_USER_ID'])))
+    bot.add_handler(CommandHandler("restart", restart, filters=filters.User(user_id = config['BOT']['ADMIN_USER_ID'])))
     #處理用戶發送的圖片
     image_handler = MessageHandler(filters.PHOTO, image)
     bot.add_handler(image_handler)
