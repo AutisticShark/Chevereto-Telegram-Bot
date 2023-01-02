@@ -1,8 +1,8 @@
 # Chevereto Telegram Bot
 
-An easy-to-use telegram bot for your Chevereto image hosting site.    
+An easy-to-use telegram bot for your Chevereto site.    
 
-[![d3b3e8f2c9777461a3a287ac737d4ee9.png](https://i.jpg.dog/d3b3e8f2c9777461a3a287ac737d4ee9.png)](https://jpg.dog/i/CRib2)
+[![f1e505a386b52e20b55e5ad463aec0fb.png](https://i.jpg.dog/f1e505a386b52e20b55e5ad463aec0fb.png)](https://jpg.dog/i/KXoKl)
 
 ## Installation Guide   
 > 1 . Install Python3.7+ & pip   
