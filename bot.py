@@ -34,7 +34,7 @@ def send_typing_action(function):
 
 @send_typing_action
 async def help(update, context):
-    await context.bot.send_message(chat_id = update.message.chat_id, text = 'Send me some pictures or image file. Available format: .jpg, .png, bmp, .gif, 20MB max file size.')
+    await context.bot.send_message(chat_id = update.message.chat_id, text = 'Send me photo or image file. Available format: ' + config['HOST']['ALLOWED_FILE_FORMAT'] + ', ' + config['HOST']['MAX_FILE_SIZE'] + 'MB max file size.')
 
 async def uptime(update, context):
     uptime_command = os.popen("uptime")
@@ -69,7 +69,7 @@ async def cache_clean(update, context):
             os.remove(os.path.join(cache_path, cache))
         elif cache.endswith(".cache"):
             os.remove(os.path.join(cache_path, cache))
-    await context.bot.send_message(chat_id = update.message.chat_id, text = 'All upload cache are cleared')
+    await context.bot.send_message(chat_id = update.message.chat_id, text = 'All upload cache are cleared.')
 
 def restart_action():
     updater.stop()
@@ -81,7 +81,7 @@ async def restart(update, context):
 
 @send_typing_action
 async def unknow_msg(update, context):
-    await context.bot.send_message(chat_id = update.message.chat_id, text = 'Please send me pictures or image file only!')
+    await context.bot.send_message(chat_id = update.message.chat_id, text = 'Please send me photo or image file only!')
 
 @send_typing_action
 async def image(update, context):
@@ -93,7 +93,7 @@ async def image(update, context):
     return_data = image_upload(request_format(image_name))
     if return_data['status_code'] == 200:
         shutil.move(image_name, 'cache/'+image_name)
-        uploaded_info = 'Upload succeeded!\nHere are your links to this image:\nWeb viewer: ' + return_data['image']['url_viewer'] +'\nDirect Link: ' + return_data['image']['url']
+        uploaded_info = 'Upload succeeded!\nHere are links to this image:\nWeb viewer: ' + return_data['image']['url_viewer'] +'\nDirect Link: ' + return_data['image']['url']
         await reply_message.edit_text(uploaded_info)
     else:
         print(return_data)
@@ -102,7 +102,7 @@ async def image(update, context):
 
 @send_typing_action
 async def image_file(update, context):
-    allowed_image_file_format = 'image/jpeg image/png image/bmp image/gif image/webp'
+    allowed_image_file_format = config['HOST']['ALLOWED_FILE_MINE']
     image_file_id = update.message.document.file_id
     image_file_name = '%s.cache' % str(uuid.uuid4())
     image_file = await context.bot.get_file(image_file_id)
@@ -113,7 +113,7 @@ async def image_file(update, context):
         return_data = image_upload(request_format(image_file_name))
         if return_data['status_code'] == 200:
             shutil.move(image_file_name, 'cache/'+image_file_name)
-            uploaded_info = 'Upload succeeded!\nHere are your links to this image:\nWeb viewer: ' + return_data['image']['url_viewer'] +'\nOrigin size: ' + return_data['image']['url']
+            uploaded_info = 'Upload succeeded!\nHere are links to this image:\nWeb viewer: ' + return_data['image']['url_viewer'] +'\nOrigin size: ' + return_data['image']['url']
             await reply_message.edit_text(uploaded_info)
         else:
             print(return_data)
