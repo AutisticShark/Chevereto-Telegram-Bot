@@ -17,7 +17,7 @@ import telegram
 from telegram.ext import Application, CommandHandler, MessageHandler, filters
 
 # 錯誤logging
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.WARNING)
 logger = logging.getLogger(__name__)
 
 # 加載config
