@@ -1,0 +1,16 @@
+[BOT]
+MODE = 
+ACCESS_TOKEN = 
+WEBHOOK_URL = 
+WEBHOOK_PORT = 
+WEBHOOK_KEY = 
+WEBHOOK_CERT = 
+ADMIN_USER_ID = 
+[HOST]
+HOST_NAME = 
+IMAGE_HOST = 
+IMAGE_HOST_API_KEY = 
+IMAGE_HOST_RETURN_FORMAT = json
+MAX_FILE_SIZE = 5
+ALLOWED_FILE_FORMAT = .jpg .png .bmp .gif .webp
+ALLOWED_FILE_MINE = image/jpeg image/png image/bmp image/gif image/webp
