@@ -6,10 +6,8 @@ import logging
 import os
 import os.path
 import shutil
-import sys
 import uuid
 from functools import wraps
-from threading import Thread
 
 import magic
 import requests
@@ -89,7 +87,7 @@ async def cache_clean(update, context):
 
 
 @send_typing_action
-async def unknow_msg(update, context):
+async def unknown_msg(update, context):
     await context.bot.send_message(chat_id=update.message.chat_id, text='Please send me photo or image file only!')
 
 
@@ -187,8 +185,8 @@ def main():
     image_file_handler = MessageHandler(filters.Document.Category('image/'), image_file)
     bot.add_handler(image_file_handler)
     # 處理用戶私聊發送的未知訊息
-    unknow_msg_handler = MessageHandler(filters.ChatType.PRIVATE, unknow_msg)
-    bot.add_handler(unknow_msg_handler)
+    unknown_msg_handler = MessageHandler(filters.ChatType.PRIVATE, unknown_msg)
+    bot.add_handler(unknown_msg_handler)
     # 檢查緩存目錄是否存在
     if not os.path.exists('cache'):
         os.makedirs('cache')
