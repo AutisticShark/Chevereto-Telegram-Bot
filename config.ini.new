@@ -14,3 +14,5 @@ IMAGE_HOST_RETURN_FORMAT = json
 MAX_FILE_SIZE = 5
 ALLOWED_FILE_FORMAT = .jpg .png .bmp .gif .webp
 ALLOWED_FILE_MINE = image/jpeg image/png image/bmp image/gif image/webp
+[DEBUG]
+LOG_LEVEL = INFO
