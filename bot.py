@@ -33,7 +33,7 @@ def send_typing_action(function):
 
 
 @send_typing_action
-async def help(update, context):
+async def get_help(update, context):
     allowed_format = config['HOST']['ALLOWED_FILE_FORMAT']
     max_file_size = config['HOST']['MAX_FILE_SIZE']
     await context.bot.send_message(chat_id=update.message.chat_id,
@@ -156,7 +156,7 @@ def main():
     admin_user_id = int(config['BOT']['ADMIN_USER_ID'])
     # handlers
     # /help指令處理
-    bot.add_handler(CommandHandler("help", help))
+    bot.add_handler(CommandHandler("help", get_help))
     # /uptime指令處理
     bot.add_handler(CommandHandler("uptime", uptime))
     # /storage_status指令處理
