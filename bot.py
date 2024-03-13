@@ -13,12 +13,13 @@ import requests
 import telegram
 from telegram.ext import Application, CommandHandler, MessageHandler, filters
 
-# 加載config
+# Read config
 config = configparser.ConfigParser()
 config.read('config.ini')
-# 錯誤logging
-logging_level = 'logging.' + config['BOT']['LOGGING_LEVEL']
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging_level)
+# Set logging
+logging_level = config['DEBUG']['LOGGING_LEVEL']
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.getLevelName(logging_level))
 logger = logging.getLogger(__name__)
 
 
@@ -77,9 +78,11 @@ def cache_files_size_count(cache_path):
 async def cache_clean(update, context):
     cache_path = os.getcwd() + '/cache'
     cache_files_list = os.listdir(cache_path)
+
     for cache in cache_files_list:
         if cache.endswith(".jpg") or cache.endswith(".cache"):
             os.remove(os.path.join(cache_path, cache))
+
     await context.bot.send_message(chat_id=update.message.chat_id, text='All upload cache are cleared.')
 
 
@@ -94,7 +97,7 @@ async def image(update, context):
     image_name = '%s.jpg' % str(uuid.uuid4())
     image_path = os.getcwd() + '/cache/' + image_name
     image_raw = await context.bot.get_file(image_id)
-    await image_raw.download_to_drive(image_path, image_name)
+    await image_raw.download_to_drive(image_path)
     reply_message = await update.message.reply_text('Downloading image from Telegram server...')
     await reply_message.edit_text(image_upload(image_path))
 
@@ -106,8 +109,9 @@ async def image_file(update, context):
     image_file_name = '%s.cache' % str(uuid.uuid4())
     image_file_path = os.getcwd() + '/cache/' + image_file_name
     image_file_raw = await context.bot.get_file(image_file_id)
-    await image_file_raw.download_to_drive(image_file_path, image_file_name)
+    await image_file_raw.download_to_drive(image_file_path)
     image_file_mime = magic.from_file(image_file_path, mime=True)
+
     if image_file_mime in allowed_image_file_format:
         reply_message = await update.message.reply_text('Downloading image file from Telegram server...')
         await reply_message.edit_text(image_upload(image_file_path))
@@ -119,16 +123,20 @@ async def image_file(update, context):
 
 def image_upload(image_file_name):
     return_data = do_image_upload(request_format(image_file_name))
-    if return_data['status_code'] == 200:
+
+    if return_data.status_code == 200:
+        return_data = return_data.json()
         url_viewer = return_data['image']['url_viewer']
         url = return_data['image']['url']
         uploaded_info = f'Upload succeeded!\n' \
                         f'Web viewer: {url_viewer}\n' \
                         f'Origin size: {url}'
+
         return uploaded_info
     else:
-        logger.error(return_data)
+        logger.error(return_data.content)
         os.remove(image_file_name)
+
         return 'Image Host error! Please try again later.'
 
 
@@ -136,64 +144,81 @@ def do_image_upload(images):
     image_host = config['HOST']['IMAGE_HOST']
     image_host_api_key = config['HOST']['IMAGE_HOST_API_KEY']
     image_host_return_format = config['HOST']['IMAGE_HOST_RETURN_FORMAT']
-    request_url = f'https://{image_host}/api/1/upload/?key={image_host_api_key}&format={image_host_return_format}'
-    upload_response = requests.post(request_url, files=images)
+    request_url = f'https://{image_host}/api/1/upload/?format={image_host_return_format}'
+    upload_response = requests.post(
+        request_url,
+        headers={
+            'User-Agent': 'Chevereto Telegram Bot',
+            'X-API-Key': image_host_api_key
+        },
+        files=images,
+    )
     logger.info(upload_response)
-    return upload_response.json()
+
+    return upload_response
 
 
-# 構造upload請求
+# Build the request format
 def request_format(image_name):
     image_upload_request = []
     image_type = magic.from_file(image_name, mime=True)
     image_upload_request.append(('source', (image_name, open(image_name, 'rb'), image_type)))
     logger.info(image_type + str(image_upload_request))
+
     return image_upload_request
 
 
 def main():
-    bot = Application.builder().token(config['BOT']['ACCESS_TOKEN']).build()
-    admin_user_id = int(config['BOT']['ADMIN_USER_ID'])
-    # handlers
-    # /help指令處理
-    bot.add_handler(CommandHandler("help", get_help))
-    # /uptime指令處理
-    bot.add_handler(CommandHandler("uptime", uptime))
-    # /storage_status指令處理
-    bot.add_handler(
-        CommandHandler("storage_status", storage_status, filters=filters.User(admin_user_id)))
-    # /cache_status指令處理
-    bot.add_handler(
-        CommandHandler("cache_status", cache_status, filters=filters.User(admin_user_id)))
-    # /cache_clean指令處理
-    bot.add_handler(
-        CommandHandler("cache_clean", cache_clean, filters=filters.User(admin_user_id)))
-    # 處理用戶發送的圖片
-    image_handler = MessageHandler(filters.PHOTO, image)
-    bot.add_handler(image_handler)
-    # 處理用戶發送的圖片文件
-    image_file_handler = MessageHandler(filters.Document.Category('image/'), image_file)
-    bot.add_handler(image_file_handler)
-    # 處理用戶私聊發送的未知訊息
-    unknown_msg_handler = MessageHandler(filters.ChatType.PRIVATE, unknown_msg)
-    bot.add_handler(unknown_msg_handler)
-    # 檢查緩存目錄是否存在
+    # Check cache folder exists
     if not os.path.exists('cache'):
         os.makedirs('cache')
-    # 啓動進程
+
+    app = Application.builder().token(config['BOT']['ACCESS_TOKEN']).build()
+    admin_user_id = int(config['BOT']['ADMIN_USER_ID'])
+    # handlers
+    # /help
+    app.add_handler(CommandHandler("help", get_help))
+    # /uptime
+    app.add_handler(CommandHandler("uptime", uptime))
+    # /storage_status
+    app.add_handler(
+        CommandHandler("storage_status", storage_status, filters=filters.User(admin_user_id)))
+    # /cache_status
+    app.add_handler(
+        CommandHandler("cache_status", cache_status, filters=filters.User(admin_user_id)))
+    # /cache_clean
+    app.add_handler(
+        CommandHandler("cache_clean", cache_clean, filters=filters.User(admin_user_id)))
+    # Process image
+    image_handler = MessageHandler(filters.PHOTO, image)
+    app.add_handler(image_handler)
+    # Process image file
+    image_file_handler = MessageHandler(filters.Document.Category('image/'), image_file)
+    app.add_handler(image_file_handler)
+    # Unknown message
+    unknown_msg_handler = MessageHandler(filters.ChatType.PRIVATE, unknown_msg)
+    app.add_handler(unknown_msg_handler)
+    # Run bot
     if config['BOT']['MODE'] == 'PULLING':
-        bot.run_polling()
+        app.run_polling()
     elif config['BOT']['MODE'] == 'WEBHOOK':
-        webhook_url = config['BOT']['WEBHOOK_URL']
-        webhook_port = config['BOT']['WEBHOOK_PORT']
-        access_token = config['BOT']['ACCESS_TOKEN']
-        bot_webhook_url = f'https://{webhook_url}:{webhook_port}/{access_token}'
-        bot.run_webhook(listen="0.0.0.0",
-                        port=int(config['BOT']['WEBHOOK_PORT']),
-                        key=config['BOT']['WEBHOOK_KEY'],
-                        cert=config['BOT']['WEBHOOK_CERT'],
-                        url_path=config['BOT']['ACCESS_TOKEN'],
-                        webhook_url=bot_webhook_url)
+        webhook_url = 'https://' + config['BOT']['WEBHOOK_URL']
+
+        if config['BOT']['WEBHOOK_SSL'] == 'True':
+            app.run_webhook(
+                listen=config['BOT']['WEBHOOK_LISTEN'],
+                port=config['BOT']['WEBHOOK_PORT'],
+                key=config['BOT']['WEBHOOK_SSL_KEY'],
+                cert=config['BOT']['WEBHOOK_SSL_CERT'],
+                webhook_url=webhook_url
+            )
+        else:
+            app.run_webhook(
+                listen=config['BOT']['WEBHOOK_LISTEN'],
+                port=config['BOT']['WEBHOOK_PORT'],
+                webhook_url=webhook_url
+            )
+
     else:
         exit()
 
