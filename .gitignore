@@ -1,0 +1,26 @@
+# Bot Configuration & Environment
+config.ini
+.env
+
+# Cache & Temporary Files
+cache/
+*.cache
+
+# Keys & Certificates
+*.pem
+*.crt
+*.key
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ruff_cache/
+
+# Virtual Environment & IDEs
+venv/
+.venv/
+.idea/
+.vscode/
+.DS_Store
