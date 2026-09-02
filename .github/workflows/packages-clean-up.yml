@@ -1,0 +1,27 @@
+name: Delete old packages
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
+
+permissions:
+  packages: write
+  contents: read
+
+concurrency:
+  group: packages-cleanup
+  cancel-in-progress: false
+
+jobs:
+  delete-packages:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Delete old packages
+        uses: actions/delete-package-versions@v5
+        with:
+          package-name: chevereto-telegram-bot
+          package-type: container
+          min-versions-to-keep: 20
+          delete-only-untagged-versions: true  

@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: workflow-run-cleanup
+  group: workflow-runs-cleanup
   cancel-in-progress: false
 
 jobs:
