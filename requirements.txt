@@ -1,0 +1,8 @@
+# Core Telegram & Networking
+python-telegram-bot[webhooks]>=21.0,<23.0
+httpx>=0.27.0
+
+# Media & System Utilities
+filetype>=1.2.0
+psutil>=6.0.0
+python-dotenv>=1.0.0

@@ -1,0 +1,16 @@
+[Unit]
+Description=Chevereto Telegram Bot
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/usr/local/Chevereto-Telegram-Bot
+ExecStart=/usr/local/Chevereto-Telegram-Bot/venv/bin/python bot.py
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,12 @@
+services:
+  chevereto-bot:
+    build: .
+    container_name: chevereto-telegram-bot
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ./config.ini:/app/config.ini:ro
+    ports:
+      - "8443:8443"
+
