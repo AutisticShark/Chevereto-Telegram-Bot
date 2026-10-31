@@ -24,7 +24,10 @@ def detect_media_info(
 
     # 2. Check hint_mime from Telegram (if reliable)
     if hint_mime and "/" in hint_mime:
-        ext = mimetypes.guess_extension(hint_mime) or ""
+        # Python < 3.13 has no built-in WebP mapping, so fall back to the filename suffix
+        ext = mimetypes.guess_extension(hint_mime) or (
+            Path(hint_filename).suffix if hint_filename else ""
+        )
         return hint_mime.lower(), ext.lower()
 
     # 3. Check filename extension
