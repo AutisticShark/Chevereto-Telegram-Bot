@@ -1,0 +1,12 @@
+# Runtime dependency ranges. Edit this file, then regenerate the hash-locked
+# requirements.txt with:
+#   uv pip compile --universal --python-version 3.10 --generate-hashes requirements.in -o requirements.txt
+
+# Core Telegram & Networking
+python-telegram-bot[webhooks]>=22.8,<23.0
+httpx>=0.28.1
+
+# Media & System Utilities
+filetype>=1.2.0
+psutil>=7.2.2
+python-dotenv>=1.2.4
